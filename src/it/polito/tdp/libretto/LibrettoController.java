@@ -48,7 +48,7 @@ public class LibrettoController {
     	}
     	Esame e = model.findEsame(codice);
     	if(e == null) {
-    		txtMessage.appendText("Esame con codice " + codice + " non trovato");
+    		txtMessage.appendText("Esame con codice " + codice + " non trovato\n");
     	}else {
     		txtCodice.setText(e.getCodice());
     		txtTitolo.setText(e.getTitolo());
@@ -73,15 +73,15 @@ public class LibrettoController {
     	
     	//chiedi al model di eseguire l'operazione
     	Esame e = new Esame(codice, titolo, docente);
-    	try {
-    		model.addEsame(e);
-    	}catch(IllegalStateException ex){
-    		txtMessage.appendText(ex.getMessage() + "\n");
+    	if(model.addEsame(e)) {
+    		txtMessage.appendText("Esame correttamente inserito.\n");
+    	}else {
+    		txtMessage.appendText("Esame con codice " + codice + " non inserito." + "\n");
     		return;
     	}
     	
     	//aggiorna la vista con il risultato della operazione
-    	txtMessage.appendText("Esame correttamente inserito.\n");
+    	
     }
 
     @FXML

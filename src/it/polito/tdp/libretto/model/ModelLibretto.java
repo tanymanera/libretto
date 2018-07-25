@@ -1,7 +1,10 @@
 package it.polito.tdp.libretto.model;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
+
+import it.polito.tdp.libretto.db.EsameDAO;
 
 public class ModelLibretto {
 	private List<Esame> esami;
@@ -18,12 +21,12 @@ public class ModelLibretto {
 	 * @param e
 	 * 
 	 */
-	public void addEsame(Esame e) {
-		if(!esami.contains(e)) {
-			esami.add(e);
-		}else {
-			throw new IllegalStateException("L'esame di codice " + e.getCodice() + " è già inserito");
-		}
+	public boolean addEsame(Esame e) {
+		EsameDAO dao = new EsameDAO();
+		
+		return dao.create(e);
+		
+			
 	}
 	
 	/**
@@ -33,13 +36,10 @@ public class ModelLibretto {
 	 * @return esame trovato oppure null
 	 */
 	public Esame findEsame(String codice) {
-		Esame esameProva = new Esame(codice, "titolo", "docente");
-		int indice = this.esami.indexOf(esameProva);
-		if(indice != -1) {
-			return this.esami.get(indice);
-		}else {
-			return null;
-		}
+		EsameDAO dao = new EsameDAO();
+		Esame e = dao.find(codice);
+		return e;
+		
 		
 	}
 
