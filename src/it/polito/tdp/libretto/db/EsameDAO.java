@@ -35,6 +35,7 @@ public class EsameDAO {
 			}else {
 				result = null;
 			}
+			pst.close();
 			conn.close();
 			return result;
 		} catch (SQLException e) {
@@ -54,6 +55,7 @@ public class EsameDAO {
 			ps.setString(3, e.getDocente());
 			
 			int result = ps.executeUpdate();
+			ps.close();
 			conn.close();
 			return true;
 		} catch(SQLIntegrityConstraintViolationException sqlex) {
